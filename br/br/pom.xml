@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>4.0.3</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>hgtx.com</groupId>
+	<artifactId>br</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>HGTX BOTS MANAGER</name>
+	<description>Um sistema de chat de robôs colaborativos para criação e organização de projetos via IA funciona como um ambiente inteligente onde vários agentes especializados trabalham juntos para transformar ideias em projetos estruturados. Em vez de apenas um único assistente, o sistema conta com múltiplos robôs com funções específicas, como analisar requisitos, definir arquitetura, gerar código, organizar tarefas, documentar decisões e validar regras de negócio.  Tudo acontece dentro de um chat central, que atua como orquestrador: ele interpreta o que o usuário deseja, divide a solicitação em partes menores e distribui as tarefas entre os robôs adequados. Enquanto um agente organiza os objetivos e transforma ideias vagas em requisitos claros, outro define a estrutura técnica, e outro pode gerar implementações iniciais ou planejar etapas de desenvolvimento.  O sistema mantém um contexto compartilhado do projeto, registrando decisões, versões e histórico de interações. Assim, cada robô trabalha com as mesmas informações atualizadas, garantindo coerência e organização. O resultado é um fluxo contínuo onde planejamento, execução e documentação acontecem de forma integrada, reduzindo retrabalho e acelerando o desenvolvimento.  Na prática, trata-se de um “time virtual” de inteligências artificiais que colaboram entre si para estruturar, construir e evoluir projetos de maneira organizada, estratégica e automatizada.</description>
+	<url />
+	<licenses>
+		<license />
+	</licenses>
+	<developers>
+		<developer />
+	</developers>
+	<scm>
+		<connection />
+		<developerConnection />
+		<tag />
+		<url />
+	</scm>
+	<properties>
+		<java.version>21</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-docker-compose</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jdbc-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webmvc-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

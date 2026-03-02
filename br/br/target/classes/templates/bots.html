@@ -30,12 +30,37 @@
         </button>
       </form>
 
-      <button class="new-folder">
-        <img th:src="@{/icons/newFolder.svg}" alt="Nova Pasta">
-      </button>
+      <form action="/projeto/newproject" method="post">
+        <button class="new-folder">
+          <img th:src="@{/icons/newFolder.svg}" alt="Nova Pasta">
+        </button>
+      </form>
     </div>
 
     <div class="chats">
+      <div th:each="projeto : ${projetos}" class="chat-item" th:attr="data-id=${projeto.id}">
+
+        <div class="chat-link">
+
+          <span class="bot-name" th:text="${projeto.nome}"></span>
+
+        </div>
+
+        <div class="bot-menu">
+          <div class="dots">⋮</div>
+
+          <div class="dropdown">
+            <button class="dropdown-item rename-btn-project" th:attr="data-id=${projeto.id}">
+              Renomear
+            </button>
+
+            <button class="dropdown-item delete-project" th:attr="data-id=${projeto.id}">
+              Excluir
+            </button>
+          </div>
+        </div>
+
+      </div>
       <div th:each="bot : ${bots}" class="chat-item" th:attr="data-id=${bot.id}">
 
         <div class="chat-link">
@@ -134,9 +159,9 @@
 
         <form th:action="@{/bots/{id}/messages(id=${bot.id})}" method="post" class="formenviomensagem">
 
-          <input type="text" name="mensage" placeholder="Digite sua mensagem..." required>
+          <input type="text" name="mensage" id="centerinput" placeholder="Digite sua mensagem..." required>
 
-          <button type="submit" class="send-btn">
+          <button type="submit" class="send-btn" id="send-btn" onclick="disableinput()">
             <img th:src="@{/icons/send.svg}" alt="Enviar">
           </button>
 
@@ -150,10 +175,13 @@
   <!-- ========================= -->
   <!-- SCRIPTS -->
   <!-- ========================= -->
-
+  <div id="flash-error" th:if="${error}" th:data-message="${error}" style="display:none;">
+  </div>
+  
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
   <script th:src="@{/js/bots.js}"></script>
+  <script th:src="@{/js/project.js}"></script>
 
 </body>
 

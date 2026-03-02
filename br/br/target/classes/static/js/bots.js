@@ -88,16 +88,16 @@ document.querySelectorAll('.rename-btn').forEach(btn => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nome: newName })
       })
-      .then(res => {
-        if (!res.ok) throw new Error();
-        nameSpan.textContent = newName;
-        input.replaceWith(nameSpan);
-        showToast("Bot renomeado com sucesso");
-      })
-      .catch(() => {
-        showToast("Erro ao renomear", "error");
-        input.replaceWith(nameSpan);
-      });
+        .then(res => {
+          if (!res.ok) throw new Error();
+          nameSpan.textContent = newName;
+          input.replaceWith(nameSpan);
+          showToast("Bot renomeado com sucesso");
+        })
+        .catch(() => {
+          showToast("Erro ao renomear", "error");
+          input.replaceWith(nameSpan);
+        });
 
     }
 
@@ -129,14 +129,14 @@ document.querySelectorAll('.delete').forEach(btn => {
     fetch(`/bots/${botId}/delete`, {
       method: 'POST'
     })
-    .then(res => {
-      if (!res.ok) throw new Error();
-      chatItem.remove();
-      showToast("Bot excluído com sucesso");
-    })
-    .catch(() => {
-      showToast("Erro ao excluir", "error");
-    });
+      .then(res => {
+        if (!res.ok) throw new Error();
+        chatItem.remove();
+        showToast("Bot excluído com sucesso");
+      })
+      .catch(() => {
+        showToast("Erro ao excluir", "error");
+      });
 
   });
 
@@ -161,19 +161,25 @@ window.addEventListener('load', () => {
 
 document.addEventListener("DOMContentLoaded", function () {
 
-  marked.setOptions({
-    breaks: true,
-    gfm: true
-  });
+  const flash = document.getElementById("flash-error");
 
-  document.querySelectorAll(".markdown").forEach(el => {
+  if (flash) {
+    const message = flash.dataset.message;
+    showToast(message, "error");
+  }
+marked.setOptions({
+  breaks: true,
+  gfm: true
+});
 
-    const rawText = el.textContent;
-    const html = marked.parse(rawText);
+document.querySelectorAll(".markdown").forEach(el => {
 
-    el.innerHTML = DOMPurify.sanitize(html);
+  const rawText = el.textContent;
+  const html = marked.parse(rawText);
 
-  });
+  el.innerHTML = DOMPurify.sanitize(html);
+
+});
 
 });
 
@@ -199,4 +205,9 @@ function typeWriter(element, text, speed = 20) {
   }
 
   type();
+}
+
+function disableinput() {
+  document.getElementById("centerinput").readOnly = true;
+  document.getElementById("send-btn").style.pointerEvents = 'none';
 }

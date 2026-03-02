@@ -14,13 +14,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-            .csrf(csrf -> csrf.disable()) // pode manter desabilitado se estiver usando API/AJAX
+            .csrf(csrf -> csrf.disable())
 
             .authorizeHttpRequests(auth -> auth
-                // 🔓 Rotas públicas
                 .requestMatchers(
+
                         "/",
-                        "/login",
+                        "/login/signup",
                         "/css/**",
                         "/js/**",
                         "/icons/**",

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import hgtx.com.br.model.Usuario;
 import hgtx.com.br.repository.BotRepository;
 import hgtx.com.br.repository.MensagemRepository;
+import hgtx.com.br.repository.ProjetoRepository;
 import hgtx.com.br.repository.UsuarioRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class RotesController {
   @Autowired
   MensagemRepository mensagemRepository;
 
+  @Autowired
+  ProjetoRepository projetoRepository;
+
   public Usuario getUsuarioLogado() {
 
     Authentication authentication = SecurityContextHolder
@@ -36,13 +40,13 @@ public class RotesController {
         || !authentication.isAuthenticated()
         || authentication.getPrincipal().equals("anonymousUser")) {
 
-      return null; // ou lançar exceção personalizada
+      return null; 
     }
 
     String email = authentication.getName();
 
     return usuarioRepository.findByEmail(email)
-        .orElse(null); // evita quebrar
+        .orElse(null); 
   }
 
   @GetMapping("/")
@@ -54,6 +58,7 @@ public class RotesController {
   public String bots(Model model) {
     model.addAttribute("user", getUsuarioLogado());
     model.addAttribute("bots", botRepository.findAllByUserEmail(getUsuarioLogado().getEmail()));
+    model.addAttribute("projetos", projetoRepository.findAllByUser(getUsuarioLogado().getId()));
     return "bots";
   }
 
@@ -79,6 +84,7 @@ public class RotesController {
     model.addAttribute("mensagens", mensagemRepository.findAllByBotId(botid));
     model.addAttribute("user", getUsuarioLogado());
     model.addAttribute("bots", botRepository.findAllByUserEmail(getUsuarioLogado().getEmail()));
+    model.addAttribute("projetos", projetoRepository.findAllByUser(getUsuarioLogado().getId()));
     return "bots";
   }
 }

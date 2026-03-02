@@ -217,6 +217,9 @@ li{
 .chat-area::-webkit-scrollbar {
   display: none;
 }
+.chats::-webkit-scrollbar{
+  display: none;
+}
 
 .messages {
   width: 100%;

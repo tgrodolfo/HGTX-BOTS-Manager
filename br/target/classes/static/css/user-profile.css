@@ -1,0 +1,85 @@
+/* ========================= */
+/* PROFILE SIMPLES */
+/* ========================= */
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.profile-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 40px;
+  width: 380px;
+  text-align: center;
+}
+
+.profile-card h2 {
+  margin-bottom: 8px;
+}
+
+.profile-card .email {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.profile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profile-btn {
+  display: block;
+  text-decoration: none;
+  background: var(--accent);
+  color: #0b1220;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 500;
+  text-align: center;
+  transition: 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.profile-btn:hover {
+  opacity: 0.85;
+}
+
+.profile-btn.logout {
+  background: #ef4444;
+  color: white;
+}
+form{
+  width: 100%;
+}button{
+  width: 100%;
+}
+/* ========================= */
+/* CLOSE BUTTON */
+/* ========================= */
+
+.profile-card {
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 18px;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: #999;
+  transition: 0.2s ease;
+}
+
+.close-btn:hover {
+  color: #ef4444;
+  transform: scale(1.2);
+}

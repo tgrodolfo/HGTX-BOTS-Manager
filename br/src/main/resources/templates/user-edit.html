@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Perfil</title>
+  <link rel="stylesheet" th:href="@{/css/bots.css}">
+  <link rel="stylesheet" th:href="@{/css/user-edit.css}">
+</head>
+
+<body class="profile-page">
+
+  <div class="profile-wrapper">
+
+    <div class="profile-card">
+
+      <a th:href="@{/user}" class="close-btn">✕</a>
+
+      <h2>Editar Perfil</h2>
+
+      <form th:action="@{/user/update}" method="post" id="editForm">
+
+        <label>Nome</label>
+        <input type="text" name="nome" th:value="${usuario.nome}" required>
+
+        <label>Email</label>
+        <input type="email" name="email" th:value="${usuario.email}" required>
+
+        <label>Nova senha</label>
+        <input type="password" name="senha" id="senha" placeholder="*******" required>
+
+        <label>Confirmar nova senha</label>
+        <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="*******" required>
+
+        <div th:if="${param.erro}" class="error-box">
+          As senhas não coincidem.
+        </div>
+
+        <small id="erroSenha" class="erro-senha"></small>
+
+        <button type="submit" class="profile-btn">
+          Salvar Alterações
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</body>
+<script>
+  const form = document.getElementById("editForm");
+  const senha = document.getElementById("senha");
+  const confirmarSenha = document.getElementById("confirmarSenha");
+  const erro = document.getElementById("erroSenha");
+
+  form.addEventListener("submit", function (e) {
+
+    if (senha.value !== "") {
+
+      if (senha.value !== confirmarSenha.value) {
+        e.preventDefault();
+        erro.textContent = "As senhas não coincidem.";
+        confirmarSenha.style.borderColor = "#ef4444";
+        return;
+      }
+
+    }
+
+  });
+</script>
+
+</html>

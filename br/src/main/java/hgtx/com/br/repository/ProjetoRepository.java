@@ -30,18 +30,24 @@ public class ProjetoRepository {
 
     @Transactional
     public void deleteById(Long id) {
-        Projeto projeto = findById(id);
-        Usuario usuario = projeto.getUsuario();
-        List<Bot> bots = botRepository.findAllByUserEmail(usuario.getEmail());
 
-        for (Bot bot : bots) {
-            if (bot.getProjeto() != null && bot.getProjeto().equals(projeto)) {
-                botRepository.delete(bot);
-            }
+        Projeto projeto = findById(id);
+
+        if (projeto == null) {
+            return;
         }
-        if (projeto != null) {
-            entityManager.remove(projeto);
+
+        // Remove o vínculo com usuários
+        for (Usuario usuario : projeto.getUsuarios()) {
+            usuario.getProjetos().remove(projeto);
         }
+
+        // Se quiser deletar bots junto:
+        for (Bot bot : projeto.getBots()) {
+            botRepository.delete(bot);
+        }
+
+        entityManager.remove(projeto);
     }
 
     @Transactional

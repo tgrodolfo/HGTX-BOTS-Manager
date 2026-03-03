@@ -7,63 +7,59 @@ import java.util.List;
 @Table(name = "projeto")
 public class Projeto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(nullable = false)
-    private String nome;
+  @Column(nullable = false)
+  private String nome;
 
-    private String descricao;
+  private String descricao;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+  // 🔥 Agora é ManyToMany
+  @ManyToMany
+  @JoinTable(name = "projeto_usuario", joinColumns = @JoinColumn(name = "projeto_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+  private List<Usuario> usuarios;
 
-    @OneToMany(mappedBy = "projeto")
-    private List<Bot> bots;
+  @OneToMany(mappedBy = "projeto")
+  private List<Bot> bots;
 
-    public Projeto() {}
+  public Projeto() {
+  }
 
-    public Long getId() {
-      return id;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setId(Long id) {
-      this.id = id;
-    }
+  public String getNome() {
+    return nome;
+  }
 
-    public String getNome() {
-      return nome;
-    }
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
 
-    public void setNome(String nome) {
-      this.nome = nome;
-    }
+  public String getDescricao() {
+    return descricao;
+  }
 
-    public String getDescricao() {
-      return descricao;
-    }
+  public void setDescricao(String descricao) {
+    this.descricao = descricao;
+  }
 
-    public void setDescricao(String descricao) {
-      this.descricao = descricao;
-    }
+  public List<Usuario> getUsuarios() {
+    return usuarios;
+  }
 
-    public Usuario getUsuario() {
-      return usuario;
-    }
+  public void setUsuarios(List<Usuario> usuarios) {
+    this.usuarios = usuarios;
+  }
 
-    public void setUsuario(Usuario usuario) {
-      this.usuario = usuario;
-    }
+  public List<Bot> getBots() {
+    return bots;
+  }
 
-    public List<Bot> getBots() {
-      return bots;
-    }
-
-    public void setBots(List<Bot> bots) {
-      this.bots = bots;
-    }
-
-    
+  public void setBots(List<Bot> bots) {
+    this.bots = bots;
+  }
 }

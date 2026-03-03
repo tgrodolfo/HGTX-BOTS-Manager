@@ -1,5 +1,6 @@
 package hgtx.com.br.controller;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +47,19 @@ public class ProjetoController {
 
   @PostMapping("/projeto/newproject")
   public String newProject() {
+
     Projeto projeto = new Projeto();
     projeto.setNome("Novo Projeto");
-    projeto.setUsuario(getUsuarioLogado());
+
+    Usuario usuario = getUsuarioLogado();
+
+    projeto.setUsuarios(new ArrayList<>());
+    projeto.getUsuarios().add(usuario);
+
+    usuario.getProjetos().add(projeto); // mantém os dois lados sincronizados
+
     projetoRepository.save(projeto);
+
     return "redirect:/bots";
   }
 

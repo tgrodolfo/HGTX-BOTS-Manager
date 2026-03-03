@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Perfil</title>
+  <link rel="stylesheet" th:href="@{/css/bots.css}">
+  <link rel="stylesheet" th:href="@{/css/user-profile.css}">
+</head>
+
+<body>
+
+  <div class="main">
+
+    <div class="header">
+      <h2>Meu Perfil</h2>
+    </div>
+
+    <div class="profile-container">
+
+      <div class="profile-card">
+
+
+        <a th:href="@{/bots}" class="close-btn">✕</a>
+
+        <h2 th:text="${usuario.nome}"></h2> 
+        <p class="email" th:text="${usuario.email}"></p>
+
+        <div class="profile-actions">
+
+          <a th:href="@{/user/edit}" class="profile-btn">
+            Alterar Informações
+          </a>
+
+          <form th:action="@{/logout}" method="post">
+            <button type="submit" class="profile-btn logout">
+              Desconectar
+            </button>
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>

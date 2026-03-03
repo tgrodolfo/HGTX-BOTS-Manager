@@ -1,0 +1,132 @@
+/* ========================= */
+/* PROFILE CENTRALIZADO */
+/* ========================= */
+
+.profile-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--bg);
+}
+
+.profile-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.profile-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 45px 40px;
+  width: 420px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.profile-card h2 {
+  margin-bottom: 25px;
+  font-weight: 500;
+}
+
+.profile-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.profile-card label {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: left;
+  margin-bottom: -8px;
+}
+
+.profile-card input {
+  background: var(--sidebar);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.profile-card input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.15);
+}
+
+.profile-btn {
+  margin-top: 10px;
+  padding: 12px;
+  background: var(--accent);
+  border: none;
+  border-radius: 10px;
+  color: #0b1220;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.profile-btn:hover {
+  opacity: 0.85;
+}
+
+.erro-senha {
+  font-size: 12px;
+  color: #ef4444;
+  text-align: left;
+  height: 14px;
+}
+
+/* ========================= */
+/* ERROR BOX */
+/* ========================= */
+
+.error-box {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+/* ========================= */
+/* CLOSE BUTTON UNIVERSAL */
+/* ========================= */
+
+.profile-card,
+.edit-card {
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: bold;
+  color: #666;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background: #ef4444;
+  color: white;
+  transform: scale(1.1);
+}

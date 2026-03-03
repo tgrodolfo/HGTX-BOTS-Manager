@@ -606,3 +606,8 @@ li{
   right: 10px;
   top: 8px;
 }
+
+.user a{
+  text-decoration: none;
+  color: var(--text);
+}

@@ -1,5 +1,7 @@
 package hgtx.com.br.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +11,7 @@ import jakarta.transaction.Transactional;
 
 @Repository
 public class BotRepository {
-  
+
     @Autowired
     private EntityManager entityManager;
 
@@ -37,15 +39,17 @@ public class BotRepository {
         return count.intValue();
     }
 
-    public java.util.List<Bot> findAllByUserEmail(String userEmail) {
+    public List<Bot> findAllByUserEmail(String userEmail) {
         String jpql = "SELECT b FROM Bot b WHERE b.usuario.email = :email";
         return entityManager.createQuery(jpql, Bot.class)
                 .setParameter("email", userEmail)
                 .getResultList();
     }
+    public List<Bot> findnoprojectByUserEmail(String userEmail) {
+        String jpql = "SELECT b FROM Bot b WHERE b.usuario.email = :email AND b.projeto IS NULL";
+        return entityManager.createQuery(jpql, Bot.class)
+                .setParameter("email", userEmail)
+                .getResultList();
+    }
 
-    
-   
-
-    
 }

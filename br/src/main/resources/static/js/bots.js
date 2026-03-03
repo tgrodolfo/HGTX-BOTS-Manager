@@ -211,3 +211,21 @@ function disableinput() {
   document.getElementById("centerinput").readOnly = true;
   document.getElementById("send-btn").style.pointerEvents = 'none';
 }
+
+/* ========================= */
+/* ABRIR / FECHAR PROJETO */
+/* ========================= */
+
+document.querySelectorAll('.project-toggle').forEach(toggle => {
+
+  toggle.addEventListener('click', e => {
+
+    // não deixar abrir se clicar nos dots
+    if (e.target.closest('.bot-menu')) return;
+
+    const projectItem = toggle.closest('.project-item');
+    projectItem.classList.toggle('open');
+
+  });
+
+});

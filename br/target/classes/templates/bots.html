@@ -38,17 +38,15 @@
     </div>
 
     <div class="chats">
-      <div th:each="projeto : ${projetos}" class="chat-item" th:attr="data-id=${projeto.id}">
+      <div th:each="projeto : ${projetos}" class="chat-item project-item" th:attr="data-id=${projeto.id}">
 
-        <div class="chat-link">
-
+        <div class="chat-link project-toggle">
+          <span class="arrow">▶</span>
           <span class="bot-name" th:text="${projeto.nome}"></span>
-
         </div>
 
         <div class="bot-menu">
           <div class="dots">⋮</div>
-
           <div class="dropdown">
             <button class="dropdown-item rename-btn-project" th:attr="data-id=${projeto.id}">
               Renomear
@@ -60,8 +58,39 @@
           </div>
         </div>
 
+        <!-- BOTS DO PROJETO -->
+        <div class="project-bots">
+          <div th:each="bot : ${bots}" th:if="${bot.projeto != null and bot.projeto.id == projeto.id}"
+            class="chat-item bot-inside" th:attr="data-id=${bot.id}">
+
+            <div class="chat-link">
+              <a th:href="@{/bots/{id}(id=${bot.id})}" class="chat-content">
+                <span class="bot-name" th:text="${bot.nome}"></span>
+              </a>
+            </div>
+
+            <div class="bot-menu">
+              <div class="dots">⋮</div>
+              <div class="dropdown">
+                <button class="dropdown-item rename-btn" th:attr="data-id=${bot.id}">
+                  Renomear
+                </button>
+
+                <button class="dropdown-item">
+                  Mover
+                </button>
+
+                <button class="dropdown-item delete" th:attr="data-id=${bot.id}">
+                  Excluir
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
-      <div th:each="bot : ${bots}" class="chat-item" th:attr="data-id=${bot.id}">
+      <div th:each="bot : ${bots}" th:if="${bot.projeto == null}" class="chat-item" th:attr="data-id=${bot.id}">
 
         <div class="chat-link">
           <a th:href="@{/bots/{id}(id=${bot.id})}" class="chat-content">
@@ -71,7 +100,6 @@
 
         <div class="bot-menu">
           <div class="dots">⋮</div>
-
           <div class="dropdown">
             <button class="dropdown-item rename-btn" th:attr="data-id=${bot.id}">
               Renomear
@@ -177,7 +205,7 @@
   <!-- ========================= -->
   <div id="flash-error" th:if="${error}" th:data-message="${error}" style="display:none;">
   </div>
-  
+
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
   <script th:src="@{/js/bots.js}"></script>

@@ -207,6 +207,16 @@ li{
 /* ========================= */
 /* CHAT AREA */
 /* ========================= */
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--muted);
+}
+.messages{
+  height: 100%;
+}
 
 .chat-area {
   flex: 1;
@@ -431,7 +441,10 @@ li{
   background: var(--hover);
 }
 
-.dropdown-item.delete {
+.dropdown-item.delete .delete-project{
+  color: #ef4444;
+}
+.delete-project {
   color: #ef4444;
 }
 
@@ -536,4 +549,60 @@ li{
 
 @keyframes blink {
   50% { opacity: 0; }
+}
+
+/* ========================= */
+/* PROJETOS (ACCORDION) */
+/* ========================= */
+
+.project-bots {
+  display: none;
+  flex-direction: column;
+  padding-left: 18px;
+}
+
+.project-item.open .project-bots {
+  display: flex;
+}
+
+.project-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.arrow {
+  font-size: 10px;
+  transition: 0.2s;
+}
+
+.project-item.open .arrow {
+  transform: rotate(90deg);
+}
+/* PROJETO */
+.project-item {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Mantém linha superior horizontal */
+.project-item > .chat-link,
+.project-item > .bot-menu {
+  display: flex;
+}
+
+/* Ajusta a linha de cima */
+.project-item {
+  position: relative;
+}
+
+.project-item > .chat-link {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.project-item > .bot-menu {
+  position: absolute;
+  right: 10px;
+  top: 8px;
 }

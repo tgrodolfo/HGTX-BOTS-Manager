@@ -27,6 +27,9 @@ public class UserController {
       @RequestParam String email,
       @RequestParam String senha) {
 
+        System.out.println("Nome: " + nome);
+        System.out.println("Email: " + email);
+        System.out.println("Senha: " + senha);
     Usuario usuario = new Usuario(nome, email, passwordEncoder.encode(senha), "ROLE_USER");
 
     usuarioRepository.save(usuario);

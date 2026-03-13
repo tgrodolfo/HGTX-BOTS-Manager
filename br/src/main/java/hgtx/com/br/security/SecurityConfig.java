@@ -20,11 +20,13 @@ public class SecurityConfig {
                 .requestMatchers(
 
                         "/",
+                        "/saveUser",
                         "/login/signup",
                         "/css/**",
                         "/js/**",
                         "/icons/**",
-                        "/BotNewMessage/**" // webhook do n8n pode acessar
+                        "/BotNewMessage/**",
+                        "/bots/" // webhook do n8n pode acessar
                 ).permitAll()
 
                 // 🔐 Todo resto precisa de login

@@ -59,7 +59,7 @@ public class BotController {
         bot.setNome("Bot " + (botRepository.contbotsbyUserEmail(getUsuarioLogado().getEmail()) + 1));
         bot.setUsuario(getUsuarioLogado());
         botRepository.save(bot);
-        return "redirect:/bots";
+        return "redirect:/bots/" + bot.getId();
     }
 
     @PostMapping("/bots/{id}/messages")
@@ -77,7 +77,6 @@ public class BotController {
             throw new RuntimeException("Acesso negado");
         }
 
-        // 🔹 Salva no banco
         Mensagem mensagem = new Mensagem();
         mensagem.setConteudo(mensage);
         mensagem.setBot(bot);
@@ -85,7 +84,6 @@ public class BotController {
         mensagem.setDataEnvio(LocalDateTime.now());
         mensagemRepository.saveMensagem(mensagem);
 
-        // 🔹 Envia para o webhook
         RestTemplate restTemplate = new RestTemplate();
 
         String url = "https://hmg-hgtx-n8n.hgtx.com.br/webhook/chat";
@@ -146,27 +144,22 @@ public class BotController {
 
     @PostMapping("/BotNewMessage/{idbot}")
     @ResponseBody
-    public Map<String, Object> newMessage(@PathVariable Long idbot,
+    public Map<String, Object> newMessage(
+            @PathVariable Long idbot,
             @RequestParam String message) {
 
-        try {
-            Mensagem mensagem = new Mensagem();
-            mensagem.setConteudo(message);
-            mensagem.setBot(botRepository.findById(idbot));
-            mensagem.setRemetente("BOT");
-            mensagem.setDataEnvio(LocalDateTime.now());
-            mensagemRepository.saveMensagem(mensagem);
+        Bot bot = botRepository.findById(idbot);
 
-            return Map.of(
-                    "status", "success",
-                    "message", "Mensagem salva com sucesso");
+        Mensagem mensagem = new Mensagem();
+        mensagem.setConteudo(message);
+        mensagem.setBot(bot);
+        mensagem.setRemetente("BOT");
+        mensagem.setDataEnvio(LocalDateTime.now());
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        mensagemRepository.saveMensagem(mensagem);
 
-            return Map.of(
-                    "status", "error",
-                    "message", e.getMessage());
-        }
+        return Map.of(
+                "status", "success",
+                "message", "Mensagem salva com sucesso");
     }
 }

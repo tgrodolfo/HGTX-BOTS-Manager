@@ -5,11 +5,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NexChat</title>
-
+  <link rel="icon" th:href="@{/icons/favicon.ico}" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" th:href="@{/css/bots.css}">
+  <link rel="manifest" th:href="@{/manifest.json}">
 </head>
 
+<script>
+    console.log("script carregou");
+
+    if ("serviceWorker" in navigator) {
+      console.log("Service Worker suportado");
+
+      navigator.serviceWorker.register("/sw.js")
+        .then(function (reg) {
+          console.log("Service Worker registrado:", reg.scope);
+        })
+        .catch(function (err) {
+          console.log("Erro ao registrar Service Worker:", err);
+        });
+
+    } else {
+      console.log("Service Worker não suportado");
+    }
+  </script>
+  
 <body>
 
   <!-- ========================= -->
@@ -203,6 +223,8 @@
   <!-- ========================= -->
   <!-- SCRIPTS -->
   <!-- ========================= -->
+  <script th:src="@{/sw.js}"></script>
+  
   <div id="flash-error" th:if="${error}" th:data-message="${error}" style="display:none;">
   </div>
 

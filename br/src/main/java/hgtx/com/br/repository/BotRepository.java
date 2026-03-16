@@ -19,37 +19,41 @@ public class BotRepository {
     public void save(Bot bot) {
         entityManager.persist(bot);
     }
+
     public Bot findById(Long id) {
         return entityManager.find(Bot.class, id);
     }
+
     @Transactional
     public void delete(Bot bot) {
-        entityManager.remove(bot);
-    }
-    @Transactional
-    public void update(Bot bot) {
-        entityManager.merge(bot);
+        entityManager.remove(entityManager.contains(bot) ? bot : entityManager.merge(bot));
     }
 
-    public int contbotsbyUserEmail(String UserEmail) {
-        String jpql = "SELECT COUNT(b) FROM Bot b WHERE b.usuario.email = :email";
+    @Transactional
+    public Bot update(Bot bot) {
+        return entityManager.merge(bot);
+    }
+
+    public int contbotsbyUserEmail(String userEmail) {
+        String jpql = "SELECT COUNT(b) FROM Bot b JOIN b.usuario u WHERE u.email = :email";
         Long count = entityManager.createQuery(jpql, Long.class)
-                .setParameter("email", UserEmail)
+                .setParameter("email", userEmail)
                 .getSingleResult();
         return count.intValue();
     }
 
     public List<Bot> findAllByUserEmail(String userEmail) {
-        String jpql = "SELECT b FROM Bot b WHERE b.usuario.email = :email";
-        return entityManager.createQuery(jpql, Bot.class)
-                .setParameter("email", userEmail)
-                .getResultList();
-    }
-    public List<Bot> findnoprojectByUserEmail(String userEmail) {
-        String jpql = "SELECT b FROM Bot b WHERE b.usuario.email = :email AND b.projeto IS NULL";
+        String jpql = "SELECT b FROM Bot b JOIN b.usuario u WHERE u.email = :email";
         return entityManager.createQuery(jpql, Bot.class)
                 .setParameter("email", userEmail)
                 .getResultList();
     }
 
+    public List<Bot> findnoprojectByUserEmail(String userEmail) {
+        String jpql = "SELECT b FROM Bot b JOIN b.usuario u WHERE u.email = :email AND b.projeto IS NULL";
+        return entityManager.createQuery(jpql, Bot.class)
+                .setParameter("email", userEmail)
+                .getResultList();
+    }
 }
+

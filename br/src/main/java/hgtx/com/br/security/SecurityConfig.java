@@ -14,34 +14,31 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-            .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.disable())
 
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
 
-                        "/",
-                        "/saveUser",
-                        "/login/signup",
-                        "/css/**",
-                        "/js/**",
-                        "/icons/**",
-                        "/BotNewMessage/**",
-                        "/bots/" // webhook do n8n pode acessar
-                ).permitAll()
+                                "/",
+                                "/saveUser",
+                                "/login/signup",
+                                "/css/**",
+                                "/js/**",
+                                "/icons/**",
+                                "/BotNewMessage/**",
+                                "/manifest.json",
+                                "/static/**",
+                                "/sw.js")
+                        .permitAll()
+                        .anyRequest().authenticated())
 
-                // 🔐 Todo resto precisa de login
-                .anyRequest().authenticated()
-            )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/bots", true)
+                        .permitAll())
 
-            .formLogin(form -> form
-                .loginPage("/login")
-                .defaultSuccessUrl("/bots", true)
-                .permitAll()
-            )
-
-            .logout(logout -> logout
-                .logoutSuccessUrl("/login")
-            );
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/login"));
 
         return http.build();
     }

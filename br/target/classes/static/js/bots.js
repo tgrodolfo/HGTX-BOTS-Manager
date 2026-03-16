@@ -133,13 +133,14 @@ document.querySelectorAll('.delete').forEach(btn => {
         if (!res.ok) throw new Error();
         chatItem.remove();
         showToast("Bot excluído com sucesso");
+        window.location.href = `/bots`;
       })
       .catch(() => {
         showToast("Erro ao excluir", "error");
       });
-
   });
 
+  
 });
 
 

@@ -6,6 +6,8 @@
   <title>Perfil</title>
   <link rel="stylesheet" th:href="@{/css/bots.css}">
   <link rel="stylesheet" th:href="@{/css/user-profile.css}">
+  <link rel="icon" th:href="@{/icons/favicon.ico}" type="image/x-icon">
+  <link rel="manifest" th:href="@{/manifest.json}">
 </head>
 
 <body>
@@ -23,7 +25,7 @@
 
         <a th:href="@{/bots}" class="close-btn">✕</a>
 
-        <h2 th:text="${usuario.nome}"></h2> 
+        <h2 th:text="${usuario.nome}"></h2>
         <p class="email" th:text="${usuario.email}"></p>
 
         <div class="profile-actions">
@@ -47,5 +49,10 @@
   </div>
 
 </body>
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js");
+  }
+</script>
 
 </html>

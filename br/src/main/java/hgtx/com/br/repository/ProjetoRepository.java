@@ -56,10 +56,11 @@ public class ProjetoRepository {
     }
 
     public List<Projeto> findAllByUser(Long userid) {
-        List<Projeto> oi = entityManager
-                .createQuery("SELECT p FROM Projeto p WHERE p.usuario.id = :userId", Projeto.class)
+        return entityManager
+                .createQuery(
+                        "SELECT DISTINCT p FROM Projeto p JOIN p.usuarios u WHERE u.id = :userId",
+                        Projeto.class)
                 .setParameter("userId", userid)
                 .getResultList();
-        return oi;
     }
 }

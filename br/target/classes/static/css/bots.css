@@ -611,3 +611,6 @@ li{
   text-decoration: none;
   color: var(--text);
 }
+.dropdown-item.delete {
+  color: #ef4444;
+}

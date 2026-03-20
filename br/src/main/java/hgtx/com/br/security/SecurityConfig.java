@@ -10,6 +10,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig {
 
+    private final CustomSuccessHandler customSuccessHandler;
+
+    public SecurityConfig(CustomSuccessHandler customSuccessHandler) {
+        this.customSuccessHandler = customSuccessHandler;
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -18,7 +24,6 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-
                                 "/",
                                 "/saveUser",
                                 "/login/signup",
@@ -34,7 +39,7 @@ public class SecurityConfig {
 
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/bots", true)
+                        .successHandler(customSuccessHandler)
                         .permitAll())
 
                 .logout(logout -> logout

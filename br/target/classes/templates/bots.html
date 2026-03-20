@@ -12,24 +12,24 @@
 </head>
 
 <script>
-    console.log("script carregou");
+  console.log("script carregou");
 
-    if ("serviceWorker" in navigator) {
-      console.log("Service Worker suportado");
+  if ("serviceWorker" in navigator) {
+    console.log("Service Worker suportado");
 
-      navigator.serviceWorker.register("/sw.js")
-        .then(function (reg) {
-          console.log("Service Worker registrado:", reg.scope);
-        })
-        .catch(function (err) {
-          console.log("Erro ao registrar Service Worker:", err);
-        });
+    navigator.serviceWorker.register("/sw.js")
+      .then(function (reg) {
+        console.log("Service Worker registrado:", reg.scope);
+      })
+      .catch(function (err) {
+        console.log("Erro ao registrar Service Worker:", err);
+      });
 
-    } else {
-      console.log("Service Worker não suportado");
-    }
-  </script>
-  
+  } else {
+    console.log("Service Worker não suportado");
+  }
+</script>
+
 <body>
 
   <!-- ========================= -->
@@ -152,7 +152,7 @@
   <div class="main">
 
     <div class="header">
-      <div class="share">
+      <div class="share" onclick="">
         <img th:src="@{/icons/share.svg}" alt="">
         <p>Compartilhar</p>
       </div>
@@ -224,7 +224,7 @@
   <!-- SCRIPTS -->
   <!-- ========================= -->
   <script th:src="@{/sw.js}"></script>
-  
+
   <div id="flash-error" th:if="${error}" th:data-message="${error}" style="display:none;">
   </div>
 
@@ -233,6 +233,24 @@
   <script th:src="@{/js/bots.js}"></script>
   <script th:src="@{/js/project.js}"></script>
 
+
+  <!-- MODAL COMPARTILHAR -->
+  <div id="share-modal" class="share-modal-overlay">
+    <div class="share-modal">
+
+      <div class="share-modal-header">
+        <h3>Compartilhar Projeto</h3>
+        <button class="share-modal-close" id="close-share-modal">✕</button>
+      </div>
+
+      <div class="share-modal-list" id="share-modal-list">
+        <div th:each="projeto : ${projetos}" class="share-modal-item" th:attr="data-id=${projeto.id}">
+          <span th:text="${projeto.nome}"></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </body>
 
 </html>

@@ -65,7 +65,7 @@ public class ProjetoController {
 
   @PostMapping("/projeto/{id}/delete")
   public String deleteProject(@PathVariable Long id) {
-    projetoRepository.deleteById(id);
+    projetoRepository.removerCompartilhamento(id, getUsuarioLogado().getId());
     return "redirect:/bots";
   }
 

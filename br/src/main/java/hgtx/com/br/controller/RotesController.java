@@ -11,6 +11,8 @@ import hgtx.com.br.repository.MensagemRepository;
 import hgtx.com.br.repository.ProjetoRepository;
 import hgtx.com.br.repository.UsuarioRepository;
 
+import java.lang.ProcessBuilder.Redirect;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -86,5 +88,15 @@ public class RotesController {
     model.addAttribute("bots", botRepository.findAllByUserEmail(getUsuarioLogado().getEmail()));
     model.addAttribute("projetos", projetoRepository.findAllByUser(getUsuarioLogado().getId()));
     return "bots";
+  }
+
+  @GetMapping("/compartilharProjeto/{id}")
+  public String compartilharProjeto(@PathVariable Long id, Model model) {
+    if (getUsuarioLogado() != null) {
+      projetoRepository.compartilharProjeto(id, getUsuarioLogado());
+      return "redirect:/bots";
+    }
+    model.addAttribute("redirect", "/compartilharProjeto/" + id);
+    return "redirect:/login";
   }
 }

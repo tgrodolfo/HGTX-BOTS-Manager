@@ -140,7 +140,6 @@ document.querySelectorAll('.delete').forEach(btn => {
       });
   });
 
-  
 });
 
 
@@ -157,32 +156,71 @@ window.addEventListener('load', () => {
 
 
 /* ========================= */
-/* MARKDOWN */
+/* MARKDOWN + MODAL */
 /* ========================= */
 
 document.addEventListener("DOMContentLoaded", function () {
 
+  // Flash error
   const flash = document.getElementById("flash-error");
-
   if (flash) {
     const message = flash.dataset.message;
     showToast(message, "error");
   }
-marked.setOptions({
-  breaks: true,
-  gfm: true
+
+  // Markdown
+  marked.setOptions({
+    breaks: true,
+    gfm: true
+  });
+
+  document.querySelectorAll(".markdown").forEach(el => {
+    const rawText = el.textContent;
+    const html = marked.parse(rawText);
+    el.innerHTML = DOMPurify.sanitize(html);
+  });
+
+  // Modal compartilhar
+  const shareBtn   = document.querySelector('.share');
+  const shareModal = document.getElementById('share-modal');
+  const closeModal = document.getElementById('close-share-modal');
+
+  if (shareBtn && shareModal && closeModal) {
+
+    shareBtn.addEventListener('click', () => {
+      shareModal.classList.add('open');
+    });
+
+    closeModal.addEventListener('click', fecharModal);
+
+    shareModal.addEventListener('click', e => {
+      if (e.target === shareModal) fecharModal();
+    });
+
+    document.querySelectorAll('.share-modal-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const projetoId = item.dataset.id;
+        const link = `https://seusite.com/compartilharProjeto/${projetoId}`;
+
+        navigator.clipboard.writeText(link)
+          .then(() => {
+            showToast("Link copiado para a área de transferência!");
+            fecharModal();
+          })
+          .catch(() => {
+            showToast("Erro ao copiar o link", "error");
+          });
+      });
+    });
+
+  }
+
 });
 
-document.querySelectorAll(".markdown").forEach(el => {
-
-  const rawText = el.textContent;
-  const html = marked.parse(rawText);
-
-  el.innerHTML = DOMPurify.sanitize(html);
-
-});
-
-});
+function fecharModal() {
+  const shareModal = document.getElementById('share-modal');
+  if (shareModal) shareModal.classList.remove('open');
+}
 
 
 /* ========================= */
@@ -213,6 +251,7 @@ function disableinput() {
   document.getElementById("send-btn").style.pointerEvents = 'none';
 }
 
+
 /* ========================= */
 /* ABRIR / FECHAR PROJETO */
 /* ========================= */
@@ -221,7 +260,6 @@ document.querySelectorAll('.project-toggle').forEach(toggle => {
 
   toggle.addEventListener('click', e => {
 
-    // não deixar abrir se clicar nos dots
     if (e.target.closest('.bot-menu')) return;
 
     const projectItem = toggle.closest('.project-item');

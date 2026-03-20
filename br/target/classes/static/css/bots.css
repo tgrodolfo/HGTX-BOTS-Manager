@@ -195,7 +195,7 @@ body {
   gap: 5px;
 }
 
-li{
+li {
   margin-left: 16px;
 }
 
@@ -214,7 +214,8 @@ li{
   height: 100%;
   color: var(--muted);
 }
-.messages{
+
+.messages {
   height: 100%;
 }
 
@@ -227,7 +228,8 @@ li{
 .chat-area::-webkit-scrollbar {
   display: none;
 }
-.chats::-webkit-scrollbar{
+
+.chats::-webkit-scrollbar {
   display: none;
 }
 
@@ -386,6 +388,7 @@ li{
     display: none;
   }
 }
+
 /* ========================= */
 /* MENU 3 PONTOS */
 /* ========================= */
@@ -441,9 +444,10 @@ li{
   background: var(--hover);
 }
 
-.dropdown-item.delete .delete-project{
+.dropdown-item.delete .delete-project {
   color: #ef4444;
 }
+
 .delete-project {
   color: #ef4444;
 }
@@ -530,6 +534,7 @@ li{
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -548,7 +553,9 @@ li{
 }
 
 @keyframes blink {
-  50% { opacity: 0; }
+  50% {
+    opacity: 0;
+  }
 }
 
 /* ========================= */
@@ -579,6 +586,7 @@ li{
 .project-item.open .arrow {
   transform: rotate(90deg);
 }
+
 /* PROJETO */
 .project-item {
   flex-direction: column;
@@ -586,8 +594,8 @@ li{
 }
 
 /* Mantém linha superior horizontal */
-.project-item > .chat-link,
-.project-item > .bot-menu {
+.project-item>.chat-link,
+.project-item>.bot-menu {
   display: flex;
 }
 
@@ -596,21 +604,128 @@ li{
   position: relative;
 }
 
-.project-item > .chat-link {
+.project-item>.chat-link {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
-.project-item > .bot-menu {
+.project-item>.bot-menu {
   position: absolute;
   right: 10px;
   top: 8px;
 }
 
-.user a{
+.user a {
   text-decoration: none;
   color: var(--text);
 }
+
 .dropdown-item.delete {
   color: #ef4444;
+}
+
+/* ========================= */
+/* MODAL COMPARTILHAR */
+/* ========================= */
+
+.share-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+  display: none; 
+}
+
+.share-modal-overlay.open {
+  display: flex;
+}
+
+.share-modal-overlay.hidden {
+  display: none !important;
+}
+
+.share-modal {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  width: 340px;
+  max-width: 90vw;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.2s ease;
+}
+
+.share-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.share-modal-header h3 {
+  font-size: 15px;
+  color: var(--text);
+}
+
+.share-modal-close {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.share-modal-close:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+
+.share-modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.share-modal-item {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.share-modal-item:hover {
+  background: var(--hover);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

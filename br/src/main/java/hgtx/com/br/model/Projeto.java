@@ -2,14 +2,24 @@ package hgtx.com.br.model;
 
 import jakarta.persistence.*;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "projeto")
 public class Projeto {
 
+
+
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @PrePersist
+  public void gerarId() {
+    if (id == null) {
+      UUID uuid = UUID.randomUUID();
+      id = uuid.getMostSignificantBits() & Long.MAX_VALUE; // evita negativo
+    }
+  }
 
   @Column(nullable = false)
   private String nome;

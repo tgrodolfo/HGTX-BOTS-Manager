@@ -35,8 +35,18 @@ public class MensagemRepository {
                 .setParameter("botId", botId)
                 .getResultList();
     }
+
     @Transactional
     public void saveMensagem(Mensagem mensagem) {
         entityManager.persist(mensagem);
+    }
+
+    public List<Mensagem> findByBotIdAfterMessageId(Long botId, Long lastId) {
+        return entityManager.createQuery(
+                "SELECT m FROM Mensagem m WHERE m.bot.id = :botId AND m.id > :lastId AND m.remetente = 'BOT'",
+                Mensagem.class)
+                .setParameter("botId", botId)
+                .setParameter("lastId", lastId)
+                .getResultList();
     }
 }

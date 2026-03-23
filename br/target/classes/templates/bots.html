@@ -169,8 +169,8 @@
         <!-- Mensagens -->
         <div th:if="${mensagens != null and !mensagens.isEmpty()}">
 
-          <div th:each="msg : ${mensagens}" th:class="'message ' + (${msg.remetente} != 'BOT' ? 'user' : 'bot')">
-
+          <div th:each="msg : ${mensagens}" th:class="'message ' + (${msg.remetente} == ${user.nome} ? 'user' : 'bot')"
+            th:attr="data-id=${msg.id}">
             <div class="message-wrapper">
 
               <p class="sender" th:text="${msg.remetente}">

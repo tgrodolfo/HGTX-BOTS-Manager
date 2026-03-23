@@ -7,61 +7,66 @@ import java.time.LocalDateTime;
 @Table(name = "mensagem")
 public class Mensagem {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String conteudo;
+  @ManyToOne
+  @JoinColumn(name = "usuario_id", nullable = true) // null = mensagem do BOT
+  private Usuario usuario;
 
-    private LocalDateTime dataEnvio = LocalDateTime.now();
+  @Column(nullable = false, columnDefinition = "TEXT")
+  private String conteudo;
 
-    @ManyToOne
-    @JoinColumn(name = "bot_id", nullable = false)
-    private Bot bot;
+  private LocalDateTime dataEnvio = LocalDateTime.now();
 
-    @Column(nullable = false)
-    private String remetente; 
-    
-    public Mensagem() {}
+  @ManyToOne
+  @JoinColumn(name = "bot_id", nullable = false)
+  private Bot bot;
 
-    public Long getId() {
-      return id;
-    }
+  @Column(nullable = false)
+  private String remetente;
 
-    public void setId(Long id) {
-      this.id = id;
-    }
+  public Mensagem() {
+  }
 
-    public String getConteudo() {
-      return conteudo;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setConteudo(String conteudo) {
-      this.conteudo = conteudo;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public LocalDateTime getDataEnvio() {
-      return dataEnvio;
-    }
+  public String getConteudo() {
+    return conteudo;
+  }
 
-    public void setDataEnvio(LocalDateTime dataEnvio) {
-      this.dataEnvio = dataEnvio;
-    }
+  public void setConteudo(String conteudo) {
+    this.conteudo = conteudo;
+  }
 
-    public Bot getBot() {
-      return bot;
-    }
+  public LocalDateTime getDataEnvio() {
+    return dataEnvio;
+  }
 
-    public void setBot(Bot bot) {
-      this.bot = bot;
-    }
+  public void setDataEnvio(LocalDateTime dataEnvio) {
+    this.dataEnvio = dataEnvio;
+  }
 
-    public String getRemetente() {
-      return remetente;
-    }
+  public Bot getBot() {
+    return bot;
+  }
 
-    public void setRemetente(String remetente) {
-      this.remetente = remetente;
-    }
+  public void setBot(Bot bot) {
+    this.bot = bot;
+  }
+
+  public String getRemetente() {
+    return remetente;
+  }
+
+  public void setRemetente(String remetente) {
+    this.remetente = remetente;
+  }
 }

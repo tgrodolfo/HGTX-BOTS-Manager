@@ -266,6 +266,8 @@ li {
 
 .message.bot .sender {
   text-align: left;
+  padding-bottom: 2px;
+  padding-top: 8px;
 }
 
 /* USER */
@@ -415,20 +417,6 @@ li {
 }
 
 /* Dropdown */
-.dropdown {
-  position: absolute;
-  top: 28px;
-  right: 0;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  display: none;
-  flex-direction: column;
-  min-width: 140px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-  z-index: 100;
-}
-
 .dropdown-item {
   background: transparent;
   border: none;
@@ -438,6 +426,7 @@ li {
   color: var(--text);
   cursor: pointer;
   transition: 0.2s;
+  width: 100%;
 }
 
 .dropdown-item:hover {
@@ -479,6 +468,7 @@ li {
   border: 1px solid var(--border);
   border-radius: 8px;
   display: flex;
+  /* 👈 sempre flex */
   flex-direction: column;
   min-width: 140px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
@@ -487,15 +477,16 @@ li {
   opacity: 0;
   transform: translateY(-6px);
   pointer-events: none;
-  transition: 0.18s ease;
+  transition: opacity 0.18s ease, transform 0.18s ease;
 }
 
 .dropdown.active {
   opacity: 1;
   transform: translateY(0);
+  /* 👈 animação suave */
   pointer-events: auto;
+  /* remove o display: block daqui */
 }
-
 
 /* ========================= */
 /* TOAST */
@@ -636,7 +627,7 @@ li {
   align-items: center;
   justify-content: center;
   animation: fadeIn 0.2s ease;
-  display: none; 
+  display: none;
 }
 
 .share-modal-overlay.open {

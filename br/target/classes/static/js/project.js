@@ -55,7 +55,7 @@ document.addEventListener('click', () => {
 /* RENOMEAR */
 /* ========================= */
 
-document.querySelectorAll('.rename-btn').forEach(btn => {
+document.querySelectorAll('.rename-btn-project').forEach(btn => {
 
   btn.addEventListener('click', e => {
     e.stopPropagation();
@@ -264,11 +264,6 @@ function typeWriter(element, text, speed = 20) {
   }
 
   type();
-}
-
-function disableinput() {
-  document.getElementById("centerinput").readOnly = true;
-  document.getElementById("send-btn").style.pointerEvents = 'none';
 }
 
 

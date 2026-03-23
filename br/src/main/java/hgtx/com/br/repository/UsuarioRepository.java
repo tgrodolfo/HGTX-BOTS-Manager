@@ -32,6 +32,21 @@ public class UsuarioRepository {
 
     @Transactional
     public void update(Usuario usuario) {
+        // pega o nome antigo antes de fazer o merge
+        Usuario usuarioAtual = entityManager.find(Usuario.class, usuario.getId());
+        System.out.println("Nome antigo: " + usuarioAtual.getNome());
+        String nomeAntigo = usuarioAtual.getNome();
+        String nomeNovo = usuario.getNome();
+
+        // só atualiza as mensagens se o nome mudou
+        if (!nomeAntigo.equals(nomeNovo)) {
+            entityManager.createQuery(
+                    "UPDATE Mensagem m SET m.remetente = :nomeNovo WHERE m.usuario.id = :usuarioId")
+                    .setParameter("nomeNovo", nomeNovo)
+                    .setParameter("usuarioId", usuario.getId())
+                    .executeUpdate();
+        }
+
         entityManager.merge(usuario);
     }
 

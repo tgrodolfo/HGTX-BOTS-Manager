@@ -1,6 +1,7 @@
 package hgtx.com.br.controller;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -63,49 +65,56 @@ public class BotController {
     }
 
     @PostMapping("/bots/{id}/messages")
-    public String newMensage(@PathVariable Long id,
-            @RequestParam String mensage, Model model, RedirectAttributes redirectAttributes) {
+    @ResponseBody
+    public Map<String, Object> newMensage(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> body) {
 
-        if (mensage.equals("")) {
-            redirectAttributes.addFlashAttribute("error", "Mensagem não pode ser vazia");
-            return "redirect:/bots/" + id;
+        String mensage = body.get("mensage");
+
+        if (mensage == null || mensage.isBlank()) {
+            return Map.of("error", "Mensagem não pode ser vazia");
         }
 
         Bot bot = botRepository.findById(id);
 
-        if (!bot.getUsuario().getEmail().equals(getUsuarioLogado().getEmail())) {
-            throw new RuntimeException("Acesso negado");
-        }
-
         Mensagem mensagem = new Mensagem();
         mensagem.setConteudo(mensage);
         mensagem.setBot(bot);
-        mensagem.setRemetente(getUsuarioLogado().getNome());
+        mensagem.setRemetente(getUsuarioLogado().getNome()); // quem enviou
         mensagem.setDataEnvio(LocalDateTime.now());
         mensagemRepository.saveMensagem(mensagem);
 
-        RestTemplate restTemplate = new RestTemplate();
+        final String mensageFinal = mensage;
+        final Bot botFinal = bot;
+        String email = getUsuarioLogado().getEmail();
+        String nome = getUsuarioLogado().getNome();
 
-        String url = "https://hmg-hgtx-n8n.hgtx.com.br/webhook/chat";
+        new Thread(() -> {
+            try {
+                RestTemplate restTemplate = new RestTemplate();
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+                Map<String, Object> payload = Map.of(
+                        "botId", botFinal.getId(),
+                        "botNome", botFinal.getNome(),
+                        "usuarioEmail", email,
+                        "mensagem", mensageFinal,
+                        "remetente", nome);
 
-        Map<String, Object> payload = Map.of(
-                "botId", bot.getId(),
-                "botNome", bot.getNome(),
-                "usuarioEmail", bot.getUsuario().getEmail(),
-                "mensagem", mensage,
-                "remetente", "USER");
+                restTemplate.postForEntity(
+                        "https://hmg-hgtx-n8n.hgtx.com.br/webhook/chat",
+                        new HttpEntity<>(payload, headers),
+                        String.class);
 
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(payload, headers);
-
-        try {
-            restTemplate.postForEntity(url, entity, String.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "redirect:/bots/" + id;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+        return Map.of(
+                "status", "ok",
+                "lastId", mensagem.getId());
     }
 
     @PostMapping("/bots/{id}/rename")
@@ -161,5 +170,21 @@ public class BotController {
         return Map.of(
                 "status", "success",
                 "message", "Mensagem salva com sucesso");
+    }
+
+    @GetMapping("/bots/{id}/messages/poll")
+    @ResponseBody
+    public List<Map<String, String>> pollMessages(
+            @PathVariable Long id,
+            @RequestParam Long lastId) {
+
+        List<Mensagem> mensagens = mensagemRepository.findByBotIdAfterMessageId(id, lastId);
+
+        return mensagens.stream()
+                .map(m -> Map.of(
+                        "id", String.valueOf(m.getId()),
+                        "conteudo", m.getConteudo(),
+                        "remetente", m.getRemetente()))
+                .toList();
     }
 }
